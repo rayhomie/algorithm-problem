@@ -94,3 +94,63 @@ LRUCache1.prototype.put = function (key, value) {
 
 
 
+/*版本三：构建字典,（用数组来存值，数组的索引表示顺序） */
+
+
+var LRUCache2 = function (capacity) {
+  this.obj = {}
+  this.index = 0
+  this.size = capacity
+};
+LRUCache2.prototype.get = function (key) {
+  if (this.obj[key] === undefined) {
+    return -1
+  } else {
+    this.index++
+    this.obj[key][this.index] = this.obj[key][this.obj[key].length - 1]
+    return this.obj[key][this.obj[key].length - 1]
+  }
+};
+LRUCache2.prototype.put = function (key, value) {
+  this.index++
+  if (this.obj[key]) {
+    this.obj[key][this.index] = value;
+    return
+  }
+  let length = 0
+  let min = null
+  for (let item in this.obj) {
+    length++
+    if (min) {
+      if (min[1].length > this.obj[item].length) {
+        min = [item, this.obj[item]]
+      }
+    } else {
+      min = [item, this.obj[item]]
+    }
+  }
+  if (length >= this.size) {
+    delete this.obj[min[0]]
+  }
+  this.obj[key] = [];
+  this.obj[key][this.index] = value
+};
+
+const a = new LRUCache2(3)
+a.put(1, 1)
+a.put(2, 2)
+a.put(3, 3)
+console.log(a.get(1))
+a.put(4, 4)
+console.log(a)
+/*
+LRUCache2 {
+  obj: {
+    '1': [ <1 empty item>, 1, <2 empty items>, 1 ],
+    '3': [ <3 empty items>, 3 ],
+    '4': [ <5 empty items>, 4 ]
+  },
+  index: 5,
+  size: 3
+}
+*/

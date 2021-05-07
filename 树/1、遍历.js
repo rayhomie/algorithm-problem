@@ -46,5 +46,47 @@ function preorderTraversal(root) {
 }
 
 
-/*3、中序遍历（左根右）*/
+/*3、中序遍历（左根右）https://leetcode-cn.com/problems/binary-tree-inorder-traversal/submissions/*/
+//递归
+var inorderTraversal = function (root) {
+  const res = []
+  if (!root) return res
+  function order(node) {
+    if (node.left) {//先遍历左节点到底，然后将当前子节点放入结果，再去遍历右节点到底（最深左节点的开始记录结果）
+      order(node.left)
+    }
+    res.push(node.val)
+    if (node.right) {
+      order(node.right)
+    }
+  }
+  order(root)
+  return res
+};
+//迭代+栈
+var inorderTraversal = function (root) {
+  const res = []
+  if (!root) return res
+  const stack = []
+  let temp = root
+  while (temp !== null) {//遍历所有左节点，并加入栈
+    stack.push(temp)
+    temp = temp.left
+  }
+  //开始出栈记录结果
+  while (stack.length > 0) {//根据pop来控制执行
+    let current = stack.pop()
+    res.push(current.val)
+    if (current.right) {
+      let temp2 = current.right//访问当前右节点（又进一个循环）
+      while (temp2 !== null) {//压入当前右节点的所有左节点
+        stack.push(temp2)
+        temp2 = temp2.left
+      }
+    }
+  }
+  return res
+}
+
 /*4、后序遍历（左右根）*/
+//迭代

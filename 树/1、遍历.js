@@ -76,7 +76,7 @@ var inorderTraversal = function (root) {
   //开始出栈记录结果
   while (stack.length > 0) {//根据pop来控制执行
     let current = stack.pop()
-    res.push(current.val)
+    res.push(current.val)//在压入右叶子之前需要处理一下结果，因为中序遍历
     if (current.right) {
       let temp2 = current.right//访问当前右节点（又进一个循环）
       while (temp2 !== null) {//压入当前右节点的所有左节点

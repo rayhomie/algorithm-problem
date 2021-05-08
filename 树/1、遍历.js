@@ -1,4 +1,4 @@
-/*1、储存（链表来存储）*/
+/*1、储存（链表来存储）https://www.bilibili.com/video/BV1ay4y1q7UW?p=12&spm_id_from=pageDriver*/
 function TreeNode(val, left, right) {
   this.val = (val === undefined ? 0 : val)
   this.left(left === undefined ? null : left)
@@ -88,5 +88,50 @@ var inorderTraversal = function (root) {
   return res
 }
 
-/*4、后序遍历（左右根）*/
-//迭代
+/*4、后序遍历（左右根）https://leetcode-cn.com/problems/binary-tree-postorder-traversal/*/
+//递归
+var postorderTraversal = function (root) {
+  let res = []
+  if (!root) return res
+  function order(node) {
+    if (node.left) {//遍历左节点到最深处
+      order(node.left)
+    }
+    if (node.right) {
+      order(node.right)
+    }
+    res.push(node.val)
+  }
+  order(root)
+  return res
+};
+//迭代+栈
+var postorderTraversal = function (root) {
+  let res = []
+  if (!root) return res
+  let stack = []
+  let temp = root
+  while (temp) {//将左叶子全部压入栈
+    stack.push(temp)
+    temp = temp.left
+  }
+  let prev = null//用于记录上一次的弹出节点
+  while (stack.length > 0) {
+    const top = stack[stack.length - 1]
+    if (!top.right || (top.right && prev === top.right)) {
+      /*如果当前节点没有右叶子 
+        或者
+        如果上一次弹出的节点 和 当前的右叶子地址相同，则记录结果（最先进入的右叶子也需要结束）*/
+      prev = stack.pop()
+      res.push(top.val)
+    }
+    else { //否则将所有左叶子压入
+      let temp2 = top.right
+      while (temp2 !== null) {
+        stack.push(temp2)
+        temp2 = temp2.left
+      }
+    }
+  }
+  return res
+};

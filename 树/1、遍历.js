@@ -135,3 +135,60 @@ var postorderTraversal = function (root) {
   }
   return res
 };
+
+//二叉树的层序遍历https://leetcode-cn.com/problems/binary-tree-level-order-traversal/
+//队列
+var levelOrder = function (root) {
+  const res = []
+  if (!root) return res
+  const queue = []
+  queue.push(root)//将根节点放入队列
+  while (queue.length > 0) {
+    const layerGroup = [];//存放当前层级的结果
+    const n = queue.length//当前的队列长度
+    for (let i = 0; i < n; i++) {
+      const target = queue.shift()//依次出队列
+      layerGroup.push(target.val)//值压入结果
+      //将左右孩子一次压入队列
+      if (target.left) {
+        queue.push(target.left)
+      }
+      if (target.right) {
+        queue.push(target.right)
+      }
+    }
+    //结果放入res
+    res.push(layerGroup)
+  }
+  return res
+};
+
+//二叉树的层序遍历 IIhttps://leetcode-cn.com/problems/binary-tree-level-order-traversal-ii/
+//队列
+var levelOrderBottom = function (root) {
+  const res = []
+  if (!root) return res
+  const queue = []
+  queue.push(root)//将根节点放入队列
+  while (queue.length > 0) {
+    const layerGroup = [];//存放当前层级的结果
+    const n = queue.length//当前的队列长度
+    for (let i = 0; i < n; i++) {
+      const target = queue.shift()//依次出队列
+      layerGroup.push(target.val)//值压入结果
+      //将左右孩子一次压入队列
+      if (target.left) {
+        queue.push(target.left)
+      }
+      if (target.right) {
+        queue.push(target.right)
+      }
+    }
+    //从头插入结果
+    res.unshift(layerGroup)
+  }
+  return res
+};
+
+
+

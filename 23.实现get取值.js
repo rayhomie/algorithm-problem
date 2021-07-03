@@ -20,8 +20,8 @@ const obj = {
 function get(obj, ...args) {
   function handle(str) {
     return str //将字符串进行处理
-      .split(".")
-      .map((i) => i.split("[").map((i) => i.split("]").join("")))
+      .split(".")//处理.
+      .map((i) => i.split("[").map((i) => i.split("]").join("")))//处理[]
       .flat() //需要数组扁平化
       .reduce((pre, key) => {//这里有个小技巧，使用reduce实现层次对象读取值
         //开始访问对象取值

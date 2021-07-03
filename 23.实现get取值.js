@@ -19,16 +19,14 @@ const obj = {
 
 function get(obj, ...args) {
   function handle(str) {
-    let res = obj;
-    str //将字符串进行处理
+    return str //将字符串进行处理
       .split(".")
       .map((i) => i.split("[").map((i) => i.split("]").join("")))
       .flat() //需要数组扁平化
-      .forEach((key) => {
+      .reduce((pre, key) => {//这里有个小技巧，使用reduce实现层次对象读取值
         //开始访问对象取值
-        res = res[key];
-      });
-    return res;
+        return pre[key];
+      }, obj);
   }
   return args.map(handle);
 }

@@ -33,9 +33,9 @@ function compactObject(obj) {
           result[i] = test;
         }
       }
-      return result;
-    }
-    if (Object.prototype.toString.call(item) === "[object Array]") {
+      // return result;
+    } else if (Object.prototype.toString.call(item) === "[object Array]") {
+      //注意这里是else if，否则最后的else逻辑错了
       result = [];
       for (let i in item) {
         let test = compact(item[i]);
@@ -43,15 +43,32 @@ function compactObject(obj) {
           result.push(test);
         }
       }
-      return result;
+      // return result;
     } else {
       result = item;
-      return result;
+      // return result;
     }
-    // return result;
+    return result;
   }
   return compact(obj);
 }
+
+//方式二：使用reduce
+
+function compactObject(val) {
+  const data = Array.isArray(val) ? val.filter(Boolean) : val;
+  return Object.keys(data).reduce(
+    (acc, key) => {
+      const value = data[key];
+      if (value) {
+        acc[key] = typeof value === "object" ? compactObject(value) : value;
+      }
+      return acc;
+    },
+    Array.isArray(data) ? [] : {}
+  );
+}
+
 console.log(
   compactObject({
     a: null,
@@ -66,4 +83,3 @@ console.log(
   })
 );
 
-//方式二：

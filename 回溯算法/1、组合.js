@@ -34,7 +34,7 @@ var combine = function (n, k) {
     for (let i = startIndex; i < n; i++) {//遍历当前集合
       path.push(i + 1);//将遍历的值加入path
       com(n, k, i + 1);//递归加入下一次遍历的path
-      path.pop();//出栈（否则会不断的向path加入）
+      path.pop();//回溯逻辑：出栈（进行撤销）
     }
   }
   com(n, k, 0);

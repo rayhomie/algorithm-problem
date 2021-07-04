@@ -18,4 +18,31 @@
  * @param {string} s
  * @return {string[][]}
  */
-var partition = function (s) {};
+var partition = function (s) {
+  let result = [];
+  let current = [];
+  //判断回文字符串
+  function isPalindrome(x) {
+    return x.toString().split("").reverse().join("") === x;
+  }
+  function backtracking(startIndex) {
+    if (startIndex === s.length) {
+      //终止条件：递归到最后一位时，将结果压入
+      result.push([...current]);
+      return;
+    }
+    for (let i = startIndex; i < s.length; i++) {
+      const str = s.substring(startIndex, i + 1); //取当前分割的字符串
+      if (isPalindrome(str)) {
+        //如果是回文则加入到结果，并递归继续遍历
+        current.push(str);
+        backtracking(i + 1); //递归继续遍历更深的节点
+        current.pop(); //回溯撤销操作
+      }
+    }
+  }
+  backtracking(0);
+  return result;
+};
+
+console.log(partition("aab"));

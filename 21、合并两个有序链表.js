@@ -21,37 +21,33 @@
  * }
  */
 /**
+ * 双指针法
  * @param {ListNode} l1
  * @param {ListNode} l2
  * @return {ListNode}
  */
 var mergeTwoLists = function (l1, l2) {
   function ListNode(val, next) {
-    this.val = (val === undefined ? 0 : val)
-    this.next = (next === undefined ? null : next)
+    this.val = val === undefined ? 0 : val;
+    this.next = next === undefined ? null : next;
   }
-  let result
-  while (l1 && l2) {
+  let result = new ListNode(); //创建一个空链表储存结果，第一个节点值为0
+  let current = result; //使用current来访问结果链表
+  while (l1 != null && l2 != null) {
+    //同时访问l1和l2链表
     if (l1.val < l2.val) {
-      let cur = result
-      while (cur) {
-        console.log(cur.val);
-        if (cur) {
-          cur = new ListNode(l1.val)
-        }
-        cur = cur.next
-      }
-      l1 = l1.next
+      //当前l1节点值<当前l2节点值时，将l1存入结果链表中。并继续遍历l1
+      current.next = l1;
+      l1 = l1.next;
     } else {
-      let cur = result
-      while (cur) {
-        if (cur) {
-          cur = new ListNode(l2.val)
-        }
-        cur = cur.next
-      }
-      l2 = l2.next
+      //否则存l2,并遍历l2
+      current.next = l2;
+      l2 = l2.next;
     }
+    //current始终指向result数组的尾部
+    current = current.next;
   }
-  return result
+  //并没有访问完，剩下一个l1或者l2节点未访问完毕
+  current.next = l1 === null ? l2 : l1;
+  return result.next; //因为result创建的时候第一个节点值为0（没用意义），所以需要返回第一个节点后面的所有节点
 };

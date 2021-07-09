@@ -27,43 +27,78 @@ trie.search("app");     // 返回 True
 */
 
 /**
- * Initialize your data structure here.
+ * 数据结构图片：https://pic.leetcode-cn.com/1618368870-HCPTZG-1.png
  */
 var Trie = function () {
-
+  this.children = {};
 };
-
-/**
- * Inserts a word into the trie. 
- * @param {string} word
- * @return {void}
- */
 Trie.prototype.insert = function (word) {
-
+  let current = this.children//创建一个指针访问这颗树
+  Array.from(word).forEach(item => {
+    if (!current[item]) {
+      current[item] = {}
+    }
+    current = current[item]
+  })
+  current.isEnd = true
 };
-
-/**
- * Returns if the word is in the trie. 
- * @param {string} word
- * @return {boolean}
- */
 Trie.prototype.search = function (word) {
-
+  let current = this.children//创建一个指针访问这颗树
+  for (const item of word) {
+    if (!current[item]) {
+      return false;
+    }
+    current = current[item];
+  }
+  //最后一次指针的指向还需要判断下，使用有结束的标记
+  return current !== undefined && current.isEnd !== undefined;
 };
-
-/**
- * Returns if there is any word in the trie that starts with the given prefix. 
- * @param {string} prefix
- * @return {boolean}
- */
 Trie.prototype.startsWith = function (prefix) {
-
+  let current = this.children//创建一个指针访问这颗树
+  for (const item of prefix) {
+    if (!current[item]) {
+      return false;
+    }
+    current = current[item];
+  }
+  return current ? true : false;
 };
+let t = new Trie();
+t.insert('aaa')
+console.log(t.startsWith('aa'));
 
-/**
- * Your Trie object will be instantiated and called as such:
- * var obj = new Trie()
- * obj.insert(word)
- * var param_2 = obj.search(word)
- * var param_3 = obj.startsWith(prefix)
- */
+
+// /**
+//  * 官方解答
+//  */
+// var Trie = function () {
+//   //以对象的形式存储这棵树
+//   this.children = {};
+// };
+// Trie.prototype.insert = function (word) {
+//   let node = this.children;
+//   for (const ch of word) {
+//     if (!node[ch]) {
+//       node[ch] = {};
+//     }
+//     node = node[ch];
+//   }
+//   node.isEnd = true;
+// };
+// Trie.prototype.searchPrefix = function (prefix) {
+//   let node = this.children;
+//   for (const ch of prefix) {
+//     if (!node[ch]) {
+//       return false;
+//     }
+//     node = node[ch];
+//   }
+//   return node;
+// }
+// Trie.prototype.search = function (word) {
+//   const node = this.searchPrefix(word);
+//   return node !== undefined && node.isEnd !== undefined;
+// };
+// Trie.prototype.startsWith = function (prefix) {
+//   return this.searchPrefix(prefix);
+// };

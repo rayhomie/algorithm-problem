@@ -43,13 +43,14 @@ var fib = function (n) {
 var handle = function (n, map) {
   if (n === 0) return 0
   if (n === 1) return 1
-  if (map[n]) {
+  if (map[n]) {//直接从缓存中取，不需要深入执行重复的计算
     return map[n];
   }
-  let res = handle(n - 1, map) + handle(n - 2, map)
-  map[n] = res
+  let res = handle(n - 1, map) + handle(n - 2, map)//每次计算结果时，都需要执行到n=0或n=1才能出结果
+  map[n] = res//将当前的结果放入字典中
   return res
 }
+
 /**
  * 解法三：动态规划
  * @param {number} n

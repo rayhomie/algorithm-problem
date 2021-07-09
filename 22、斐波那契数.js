@@ -60,11 +60,12 @@ function fib(n) {
   if (n === 0) {
     return 0;
   }
-  const dp = new Array(n);
+  const dp = new Array(n);//正常思路，创建确定长度的数组
+  //确定数组前两位的值
   dp[1] = 1;
   dp[2] = 1;
-  for (let i = 3; i <= n; i++) {
+  for (let i = 3; i <= n; i++) {//从数组第三位开始遍历，动态求值
     dp[i] = dp[i - 1] + dp[i - 2];
   }
-  return dp[n];
+  return dp[n];//最后返回结果
 }

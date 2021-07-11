@@ -65,11 +65,14 @@ console.log(checkValidString(""));
 var checkValidString = function (s) {
   let low = (high = 0);
   for (let c of s) {
-    low += c === "(" ? 1 : -1;
-    high += c !== ")" ? 1 : -1;
+    //遍历字符串
+    low += c === "(" ? 1 : -1; //最小的情况下，左括号则low+1,否则则low-1
+    high += c !== ")" ? 1 : -1; //最多的情况下，不为左括号或者*则high+1,否则则high-1
     if (high < 0) {
+      //左括号和*的个数小于0，则返回false
       return false;
     }
+    //low最小为0
     low = Math.max(low, 0);
   }
   return low === 0;

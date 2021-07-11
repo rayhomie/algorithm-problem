@@ -21,7 +21,7 @@
 */
 
 /**
- * 栈的方式：
+ * 双栈的方式：
  * 作者：alex-wong-9
  * 链接：https://leetcode-cn.com/problems/valid-parenthesis-string/solution/you-xiao-de-gua-hao-zi-fu-chuan-xian-jian-ce-you-g/
  * 来源：力扣（LeetCode）
@@ -31,13 +31,14 @@
  */
 
 var checkValidString = function (s) {
-  let left = [],
-    star = [];
+  let left = [], //用于存储左括号的下标
+    star = []; //用于存储星号的下标
   for (let i = 0; i < s.length; i++) {
-    if (s[i] == "(") left.push(i);
-    if (s[i] == "*") star.push(i);
+    if (s[i] == "(") left.push(i); //遇到左则记录
+    if (s[i] == "*") star.push(i); //遇到星号也记录
     if (s[i] == ")") {
       if (left.length == 0) {
+        //left栈中没有东西可以出栈时，看star中有无可以出栈。都没有直接返回false
         if (star.length == 0) return false;
         star.pop();
       } else {
@@ -45,8 +46,10 @@ var checkValidString = function (s) {
       }
     }
   }
-  if (left.length > star.length) return false;
+  if (left.length > star.length) return false; //left中的个数比star中多，则没法实现星号来填补，直接返回false
+  //star个数比left多，则无所谓，因为星号可以当做空格
   while (left.length && star.length) {
+    //将两个栈同时进行出栈，判断左括号下标比星号下标大的话，则直接返回false
     if (left.pop() > star.pop()) return false;
   }
   return true;

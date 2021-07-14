@@ -19,16 +19,35 @@ x 是 y 的一个前缀；
 */
 
 /**
+ * https://leetcode-cn.com/problems/smallest-string-with-a-given-numeric-value/solution/ju-you-gei-ding-shu-zhi-de-zui-xiao-zi-f-6cdq/
+ * 贪心算法
+ * 先各位全部填充a，保证位数，再从最后一位向前推：
+ * 第一步：先定义一个长度为n的数组，给每一位上都填充上字符a；
+ * 第二步：k - n 就是每一位都是a的时候还差多少；
+ * 第三步：从最后一位（即n-1）开始，从后往前来分余下的k - n；
  * @param {number} n
  * @param {number} k
  * @return {string}
  */
 
-function getLetter(n) {
-  return String.fromCharCode(n + 96);
-}
 var getSmallestString = function (n, k) {
-
+  // k - n 每一位都是a的时候还差多少;i是下一个要进行填充的位
+  let res = Array(n).fill("a"),
+    remain = k - n, //剩下多少没有分配的值
+    i = n - 1; //最后一位的索引
+  while (remain) {
+    if (remain > 25) {
+      // 当前位无法填充完
+      remain -= 25; //此时还有剩，继续循环
+      res[i] = "z";
+      i--; //进入前一位
+    } else {
+      // 当前位可以填充完剩余的值
+      res[i] = String.fromCharCode(97 + remain);
+      remain = 0; //结束循环
+    }
+  }
+  return res.join("");
 };
 
 console.log(getSmallestString(3, 27));

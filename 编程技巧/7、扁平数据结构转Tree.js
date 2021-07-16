@@ -68,31 +68,48 @@ const arrayToTree = (data, pid = 0) => {
 };
 
 /**
- * 循环
+ * 循环O(n)
  */
 function arrayToTree(items) {
   const result = []; // 存放结果集
-  const itemMap = {}; //
+  const itemMap = {};
   // 先转成map存储
   for (const item of items) {
-    itemMap[item.id] = { ...item, children: [] };
+    itemMap[item.id] = { ...item, children: [] }; // 将遍历一遍用哈希表存储起来
   }
   for (const item of items) {
     const id = item.id;
     const pid = item.pid;
     const treeItem = itemMap[id];
     if (pid === 0) {
+      //这里只是输出pid为0的链表即可
+      // 第一个的pid为0，加入结果
       result.push(treeItem);
     } else {
       if (!itemMap[pid]) {
+        // 当pid在map中找不到对应的id，则将空的加入结果
         itemMap[pid] = {
           children: [],
         };
       }
+      // itemMap[pid]找到对应id的值,将其加入到children中
       itemMap[pid].children.push(treeItem);
     }
   }
   return result;
 }
+
+/**
+ * 遍历过滤两次：O(n^2)
+ */
+const arrayToTree = (itemArray) => {
+  return itemArray.filter((item) => {
+    // filter会将整个数组遍历一遍
+    // 挂载子级
+    item["children"] = itemArray.filter((child) => item["id"] === child["pid"]); // 返回的数组是浅拷贝的
+    // 返回顶层数据
+    return item["pid"] === 0; // 找到顶层pid为0的数据返回
+  });
+};
 
 console.log(JSON.stringify(arrayToTree(data)));

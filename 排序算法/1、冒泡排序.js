@@ -1,5 +1,6 @@
 const data = [3, 11, 8, 0, -1, 2, 10, 29, 21, 1, 4, 1];
 
+//时间复杂度O(n2)
 function BubbleSort(data) {
   console.time("冒泡排序耗时");
   for (let i = 0; i < data.length; i++) {

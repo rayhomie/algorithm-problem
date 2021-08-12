@@ -12,9 +12,33 @@
 
 示例 3：
 输入：s = "a"
+https://leetcode-cn.com/problems/longest-palindromic-substring/
 
 /**
+ * 暴力枚举法（超时）o(n3)
  * @param {string} s
  * @return {string}
  */
-var longestPalindrome = function (s) {};
+const isPalindrome = (s) => {
+  return s.split("").reverse().join("") === s;
+};
+const longestPalindrome = (s) => {
+  let max = "";
+  for (var i = 0; i < s.length; i++) {
+    let j = i + 1;
+    while (j <= s.length) {
+      let curStr = s.slice(i, j);
+      if (curStr.length > max.length && isPalindrome(curStr)) {
+        max = curStr;
+      }
+      j++;
+    }
+  }
+  return max;
+};
+
+console.log(
+  longestPalindrome(
+    "kyyrjtdplseovzwjkykrjwhxquwxsfsorjiumvxjhjmgeueafubtonhlerrgsgohfosqssmizcuqryqomsipovhhodpfyudtusjhonlqabhxfahfcjqxyckycstcqwxvicwkjeuboerkmjshfgiglceycmycadpnvoeaurqatesivajoqdilynbcihnidbizwkuaoegmytopzdmvvoewvhebqzskseeubnretjgnmyjwwgcooytfojeuzcuyhsznbcaiqpwcyusyyywqmmvqzvvceylnuwcbxybhqpvjumzomnabrjgcfaabqmiotlfojnyuolostmtacbwmwlqdfkbfikusuqtupdwdrjwqmuudbcvtpieiwteqbeyfyqejglmxofdjksqmzeugwvuniaxdrunyunnqpbnfbgqemvamaxuhjbyzqmhalrprhnindrkbopwbwsjeqrmyqipnqvjqzpjalqyfvaavyhytetllzupxjwozdfpmjhjlrnitnjgapzrakcqahaqetwllaaiadalmxgvpawqpgecojxfvcgxsbrldktufdrogkogbltcezflyctklpqrjymqzyzmtlssnavzcquytcskcnjzzrytsvawkavzboncxlhqfiofuohehaygxidxsofhmhzygklliovnwqbwwiiyarxtoihvjkdrzqsnmhdtdlpckuayhtfyirnhkrhbrwkdymjrjklonyggqnxhfvtkqxoicakzsxmgczpwhpkzcntkcwhkdkxvfnjbvjjoumczjyvdgkfukfuldolqnauvoyhoheoqvpwoisniv"
+  )
+);

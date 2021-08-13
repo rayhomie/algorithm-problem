@@ -16,10 +16,12 @@ https://leetcode-cn.com/problems/longest-palindromic-substring/
 
 /**
  * 暴力枚举法（超时，需要去枝优化）o(n3)
+ * 运行时间：1.775s
  * @param {string} s
  * @return {string}
  */
 const isPalindrome = (s) => {
+  //这样判断回文数会将整个数遍历一次才能判断出
   return s.split("").reverse().join("") === s;
 };
 const longestPalindrome = (s) => {
@@ -39,12 +41,14 @@ const longestPalindrome = (s) => {
 
 /**
  * 暴力枚举法（优化！！！）o(n3)
+ * 运行时间：0.152s
  * @param {string} s
  * @return {string}
  */
 //使用性能更高的回文判断
 const isPalindrome1 = (s) => {
   var len = s.length;
+  //这样判断回文数可以减少遍历
   for (let i = 0; i < len / 2; i++) {
     if (s.charAt(i) != s.charAt(len - i - 1)) {
       return false;
@@ -72,6 +76,16 @@ const longestPalindrome1 = (s) => {
  * @param {string} s
  * @return {string}
  */
+
+const longestPalindrome2 = (s) => {
+  let max = "";
+  for (var i = 0; i < s.length; i++) {
+  
+    while (i-1,i+1) {}
+  }
+  return max;
+};
+
 console.log(
   longestPalindrome1(
     "kyyrjtdplseovzwjkykrjwhxquwxsfsorjiumvxjhjmgeueafubtonhlerrgsgohfosqssmizcuqryqomsipovhhodpfyudtusjhonlqabhxfahfcjqxyckycstcqwxvicwkjeuboerkmjshfgiglceycmycadpnvoeaurqatesivajoqdilynbcihnidbizwkuaoegmytopzdmvvoewvhebqzskseeubnretjgnmyjwwgcooytfojeuzcuyhsznbcaiqpwcyusyyywqmmvqzvvceylnuwcbxybhqpvjumzomnabrjgcfaabqmiotlfojnyuolostmtacbwmwlqdfkbfikusuqtupdwdrjwqmuudbcvtpieiwteqbeyfyqejglmxofdjksqmzeugwvuniaxdrunyunnqpbnfbgqemvamaxuhjbyzqmhalrprhnindrkbopwbwsjeqrmyqipnqvjqzpjalqyfvaavyhytetllzupxjwozdfpmjhjlrnitnjgapzrakcqahaqetwllaaiadalmxgvpawqpgecojxfvcgxsbrldktufdrogkogbltcezflyctklpqrjymqzyzmtlssnavzcquytcskcnjzzrytsvawkavzboncxlhqfiofuohehaygxidxsofhmhzygklliovnwqbwwiiyarxtoihvjkdrzqsnmhdtdlpckuayhtfyirnhkrhbrwkdymjrjklonyggqnxhfvtkqxoicakzsxmgczpwhpkzcntkcwhkdkxvfnjbvjjoumczjyvdgkfukfuldolqnauvoyhoheoqvpwoisniv"

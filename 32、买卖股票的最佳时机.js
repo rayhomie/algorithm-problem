@@ -20,8 +20,32 @@
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 */
 
-/**
+/** 暴力(超时)
  * @param {number[]} prices
  * @return {number}
  */
-var maxProfit = function (prices) {};
+var maxProfit = function (prices) {
+  let result = 0;
+  for (let i = 0; i < prices.length; i++) {
+    for (let j = i + 1; j < prices.length; j++) {
+      result = Math.max(prices[j] - prices[i], result);
+    }
+  }
+  return result;
+};
+
+/** 贪心
+ * @param {number[]} prices
+ * @return {number}
+ */
+var maxProfit1 = function (prices) {
+  let result = 0;
+  let min = prices[0];
+  for (let i = 0; i < prices.length; i++) {
+    min = Math.min(min, prices[i]); // 取最左最小价格
+    result = Math.max(result, prices[i] - min); // 直接取最大区间利润
+  }
+  return result;
+};
+
+console.log(maxProfit([2, 4, 1]));

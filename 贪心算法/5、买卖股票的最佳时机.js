@@ -35,6 +35,7 @@ var maxProfit = function (prices) {
 };
 
 /** 贪心
+ * 遍历一遍，取当前最小的值，算最大的利润
  * @param {number[]} prices
  * @return {number}
  */

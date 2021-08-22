@@ -50,3 +50,22 @@ var maxProfit1 = function (prices) {
 };
 
 console.log(maxProfit([2, 4, 1]));
+
+// dp
+var maxProfit = function(prices) {
+  // judge the boundary conditions
+  if(!prices || prices.length === 1) return 0
+  let len = prices.length,
+  dp = [0],
+  minPrice = prices[0]
+  
+  for(let i = 1; i < len; i++){
+    // find the minimum price
+    minPrice = Math.min(minPrice, prices[i])
+    // record the maximum profit of per day
+    dp.push(Math.max(dp[i-1], prices[i]-minPrice))
+  }
+  return dp[len-1]
+};
+
+

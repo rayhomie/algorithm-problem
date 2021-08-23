@@ -47,7 +47,7 @@ var merge = function (nums1, m, nums2, n) {
 
 // 方法三：双指针，nums1的最后往前遍历比较俩个数组的值
 var merge = function (nums1, m, nums2, n) {
-  // 遍历一遍nums2数组
+  // 遍历一遍nums2数组（直到nums2被遍历完，全部放到nums1中）
   while (n > 0) {
     // 双指针进行大小判断并取大赋值，注意m、n为长度
     nums1[m + n - 1] = nums1[m - 1] > nums2[n - 1] ? nums1[--m] : nums2[--n];

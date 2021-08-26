@@ -140,10 +140,8 @@ const createTreeNode = (node) => {
 // the compare of sort
 const compare = (properties) => {
   return (a, b) => {
-    if (a[properties[0]] !== b[properties[0]]) {
-      return a[properties[0]] - b[properties[0]];
-    } else {
-      return a[properties[1]] - b[properties[1]];
+    for (let property of properties) {
+      if (a[property] !== b[property]) return a[property] - b[property];
     }
   };
 };

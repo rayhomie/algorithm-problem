@@ -113,3 +113,69 @@ const arrayToTree = (itemArray) => {
 };
 
 console.log(JSON.stringify(arrayToTree(data)));
+
+
+
+// the stuct of TreeNode
+class TreeNode {
+  id = 0;
+  pid = 0;
+  name = "";
+  children = [];
+
+  constructor(node) {
+    const { id, pid, name } = node;
+
+    this.id = id;
+    this.pid = pid;
+    this.name = name;
+  }
+}
+
+const createTreeNode = (node) => {
+  let res = new TreeNode(node);
+  return res;
+};
+
+// the compare of sort
+const compare = (properties) => {
+  return (a, b) => {
+    for (let property of properties) {
+      if (a[property] !== b[property]) return a[property] - b[property];
+    }
+  };
+};
+
+const arrayToTree = (arr) => {
+  // judge the boundary conditions
+  if (!arr || !arr.length) return;
+  // sort the data according to rules, pid -> id
+  arr.sort(compare(["pid", "id"]));
+
+  /**
+   * root
+   * curNodes: record which nodes have been traversed
+   * curParNode: record who the current parent node is
+   */
+  let root = createTreeNode(arr.shift()),
+    curNodes = [root],
+    curParNode = curNodes.shift();
+
+  for (let node of arr) {
+    let curNode = createTreeNode(node);
+    // Mark the curNode(current node) has been traversed, put it into the curNodes
+    curNodes.push(curNode);
+
+    //  Determine whether the parent node of curNode(current node) is the curParNode(current parent node)
+    while (curParNode.id !== curNode.pid) {
+      // if not, changed the curParNode
+      curParNode = curNodes.shift();
+    }
+    // put the children node into the curParNode's children array
+    curParNode.children.push(curNode);
+  }
+  return root;
+};
+
+console.log(arrayToTree(data));
+

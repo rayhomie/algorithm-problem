@@ -144,7 +144,7 @@ var postorderTraversal = function (root) {
 };
 
 //二叉树的层序遍历https://leetcode-cn.com/problems/binary-tree-level-order-traversal/
-//递归
+//递归: 层序遍历递归，就是用前序遍历这是多传可一个结果存放时的索引的参数
 function levelOrder(root) {
   const arr = [];
   //递归形式类似于前序遍历,分层记录结果
